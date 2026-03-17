@@ -4,6 +4,7 @@ import 'package:recipe_finder/core/constants/app_images.dart';
 import 'package:recipe_finder/core/routing/routes.dart';
 import 'package:recipe_finder/core/theme/text_styles.dart';
 import 'package:recipe_finder/features/splash/widgets/custom_circle.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -15,6 +16,17 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
+
+  void checkUser() {
+    final user = Supabase.instance.client.auth.currentUser;
+
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.login);
+    }
+  }
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -26,7 +38,7 @@ class _SplashViewState extends State<SplashView>
 
     animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Navigator.pushReplacementNamed(context, Routes.login);
+        checkUser();
       }
     });
 
@@ -56,53 +68,55 @@ class _SplashViewState extends State<SplashView>
               ),
             ),
 
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  AppImages.logo,
-                  fit: BoxFit.contain,
-                  height: 120,
-                  width: 96,
-                ),
-                SizedBox(height: 10),
-                Text('Recipe Finder', style: AppTextStyles.s36ExtraBold),
-                SizedBox(height: 10),
-                Text('COOK WITH PASSION', style: AppTextStyles.s14Meduim),
-                SizedBox(height: 50),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 40),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SizedBox(
-                          width: 120,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(10),
-                            child: LinearProgressIndicator(
-                              value: animationController.value,
-                              minHeight: 3,
-                              backgroundColor: Colors.white24,
-                              valueColor: const AlwaysStoppedAnimation(
-                                AppColors.secondaryColor,
-                              ),
-                            ),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppImages.logo,
+                    fit: BoxFit.contain,
+                    height: 120,
+                    width: 96,
+                  ),
+                  SizedBox(height: 10),
+                  Text('Recipe Finder', style: AppTextStyles.s36ExtraBold),
+                  SizedBox(height: 10),
+                  Text('COOK WITH PASSION', style: AppTextStyles.s14Meduim),
+                  SizedBox(height: 50),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: 120,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: LinearProgressIndicator(
+                          value: animationController.value,
+                          minHeight: 3,
+                          backgroundColor: Colors.white24,
+                          valueColor: const AlwaysStoppedAnimation(
+                            AppColors.secondaryColor,
                           ),
                         ),
-
-                        const SizedBox(height: 10),
-
-                        const Text(
-                          "LOADING KITCHEN",
-                          style: AppTextStyles.s12SemiBold,
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+
+                    const SizedBox(height: 10),
+
+                    const Text(
+                      "LOADING KITCHEN",
+                      style: AppTextStyles.s12SemiBold,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ],
         ),

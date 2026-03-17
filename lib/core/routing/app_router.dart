@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_finder/core/routing/routes.dart';
+import 'package:recipe_finder/features/auth/presentation/views/login_view.dart';
+import 'package:recipe_finder/features/auth/presentation/views/sign_up_view.dart';
 import 'package:recipe_finder/features/splash/views/splash_view.dart';
 
 class AppRouter {
@@ -8,7 +10,9 @@ class AppRouter {
       case Routes.splash:
         return MaterialPageRoute(builder: (_) => SplashView());
       case Routes.login:
-      // return MaterialPageRoute(builder: (_) => LoginView());
+      return MaterialPageRoute(builder: (_) => LoginView());
+      case Routes.signUp:
+      return MaterialPageRoute(builder: (_) => SignUpView());
 
       default:
         return MaterialPageRoute(
