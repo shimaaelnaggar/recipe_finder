@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recipe_finder/core/constants/app_colors.dart';
@@ -21,6 +20,7 @@ class CustomTextFormField extends StatelessWidget {
   final Color? cursorColor;
   final Color? inputColor;
   final bool filledColor;
+  final BorderSide? borderSide;
 
   const CustomTextFormField({
     super.key,
@@ -40,6 +40,7 @@ class CustomTextFormField extends StatelessWidget {
     this.cursorColor,
     this.inputColor,
     this.filledColor = false,
+    this.borderSide,
   });
 
   @override
@@ -73,21 +74,18 @@ class CustomTextFormField extends StatelessWidget {
               hintText: hint,
               hintStyle: hintStyle ?? AppTextStyles.s16Regular,
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: AppColors.primaryColor,
-                  width: 2,
-                ),
+                borderSide: borderSide?? BorderSide(color: AppColors.primaryColor, width: 2),
               ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: Color(0xffD1D5DB), width: 1),
+                borderSide:borderSide?? BorderSide(color: Color(0xffD1D5DB), width: 1),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
-                borderSide: BorderSide(color: Color(0xffD1D5DB), width: 1),
+                borderSide:borderSide?? BorderSide(color: Color(0xffD1D5DB), width: 1),
               ),
               errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(
+                borderSide:borderSide?? BorderSide(
                   color: Color(AppColors.errorColor),
                   width: 2,
                 ),
