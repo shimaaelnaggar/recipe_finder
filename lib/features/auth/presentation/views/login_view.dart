@@ -59,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
               context: context,
               color: Color(AppColors.successColor),
             );
-            // Navigator.pushReplacementNamed(context, Routes.layout);
+            Navigator.pushReplacementNamed(context, Routes.layout);
           }
         },
         builder: (context, state) {

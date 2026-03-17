@@ -21,7 +21,7 @@ class _SplashViewState extends State<SplashView>
     final user = Supabase.instance.client.auth.currentUser;
 
     if (user != null) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, Routes.layout);
     } else {
       Navigator.pushReplacementNamed(context, Routes.login);
     }

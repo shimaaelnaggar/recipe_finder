@@ -63,7 +63,7 @@ class _SignUpViewState extends State<SignUpView> {
               color: Color(AppColors.successColor),
             );
 
-            Navigator.pushReplacementNamed(context, Routes.login);
+            Navigator.pushReplacementNamed(context, Routes.layout);
           }
         },
         builder: (context, state) {
@@ -112,7 +112,7 @@ class _SignUpViewState extends State<SignUpView> {
                                 ),
                                 textInputAction: TextInputAction.next,
                               ),
-                               SizedBox(height: 20),
+                              SizedBox(height: 20),
                               CustomText(text: 'Email'),
                               CustomTextFormField(
                                 controller: emailController,
