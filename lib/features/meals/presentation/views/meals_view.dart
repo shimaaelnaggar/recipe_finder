@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipe_finder/core/constants/app_colors.dart';
+import 'package:recipe_finder/core/theme/text_styles.dart';
 import 'package:recipe_finder/core/widgets/functions.dart';
-import 'package:recipe_finder/features/home/data/repos/home_repo.dart';
-import 'package:recipe_finder/features/home/presentation/cubit/home_cubit.dart';
-import 'package:recipe_finder/features/home/presentation/widgets/categories.dart';
-import 'package:recipe_finder/features/home/presentation/widgets/home_header.dart';
-import 'package:recipe_finder/features/home/presentation/widgets/recipe_card.dart';
-import 'package:recipe_finder/features/home/presentation/widgets/search_field.dart';
+import 'package:recipe_finder/features/meals/data/repos/meals_repo.dart';
+import 'package:recipe_finder/features/meals/presentation/cubit/meals_cubit.dart';
+import 'package:recipe_finder/features/meals/presentation/widgets/meal_card.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
-
+class MealsView extends StatelessWidget {
+  const MealsView({super.key, required this.categoryName});
+  final String categoryName;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(homeRepo: HomeRepo())..getCategories(),
-      child: BlocConsumer<HomeCubit, HomeState>(
+      create: (context) =>
+          MealsCubit(mealsRepo: MealsRepo(categoryName: categoryName))
+            ..getMeals(),
+      child: BlocConsumer<MealsCubit, MealsState>(
         listener: (context, state) {
-          if (state is HomeError) {
+          if (state is MealsError) {
             snackBar(
               text: state.errorMessage,
               context: context,
@@ -28,36 +28,43 @@ class Home extends StatelessWidget {
         },
         builder: (context, state) {
           return Scaffold(
+            appBar: AppBar(
+              backgroundColor: AppColors.secondaryColor,
+              title: Text(
+                categoryName,
+                style: AppTextStyles.s30Bold.copyWith(fontSize: 18),
+              ),
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.arrow_back, color: AppColors.primaryColor),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.search, color: AppColors.darkGray),
+                ),
+              ],
+            ),
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Column(
                   children: [
-                    if (state is HomeLoading)
+                    if (state is MealsLoading)
                       Center(
                         child: CircularProgressIndicator(
                           color: AppColors.primaryColor,
                         ),
                       ),
 
-                    const SizedBox(height: 20),
-
-                    HomeHeader(),
-
-                    SizedBox(height: 20),
-
-                    SearchField(),
-
-                    SizedBox(height: 20),
-
-                    CategoriesSection(),
-
                     SizedBox(height: 20),
 
                     Expanded(
-                      child: state is HomeLoaded
+                      child: state is MealsLoaded
                           ? GridView.builder(
-                              itemCount: state.categories.length,
+                              itemCount: state.meals.length,
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
@@ -66,10 +73,9 @@ class Home extends StatelessWidget {
                                     childAspectRatio: 0.75,
                                   ),
                               itemBuilder: (context, index) {
-                                return RecipeCard(
-                                  image: state.categories[index].categoryImage,
-                                  title: state.categories[index].categoryTitle,
-                                  arguments: state.categories[index].categoryTitle,
+                                return MealCard(
+                                  image: state.meals[index].mealImage,
+                                  title: state.meals[index].mealTitle,
                                 );
                               },
                             )

@@ -14,6 +14,12 @@ class AppTextStyles {
     fontWeight: FontWeight.w500,
   );
 
+  static const s11Meduim = TextStyle(
+    fontSize: 11,
+    color: AppColors.darkGray,
+    fontWeight: FontWeight.w500,
+  );
+
   static const s12SemiBold = TextStyle(
     fontSize: 12,
     color: AppColors.secondaryColor,

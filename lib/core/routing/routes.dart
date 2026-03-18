@@ -3,4 +3,6 @@ class Routes {
   static const login = '/login';
   static const signUp = '/sign_up';
   static const layout = '/layout';
+  static const meals = '/meals';
+  static const mealsDetails = '/meals_details';
 }
