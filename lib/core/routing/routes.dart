@@ -5,4 +5,5 @@ class Routes {
   static const layout = '/layout';
   static const meals = '/meals';
   static const mealsDetails = '/meals_details';
+  static const editProfile = '/edit_profile';
 }

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recipe_finder/features/auth/presentation/views/login_view.dart';
 import 'package:recipe_finder/features/favorites/presentation/views/favorites_view.dart';
 import 'package:recipe_finder/features/home/presentation/views/home.dart';
+import 'package:recipe_finder/features/profile/presentation/views/profile.dart';
 
 part 'layout_state.dart';
 
 class LayoutCubit extends Cubit<LayoutState> {
   LayoutCubit() : super(LayoutInitial());
 
-  List<Widget> views = [const Home(), const FavoritesView(), const LoginView()];
+  List<Widget> views = [
+    const Home(),
+    const FavoritesView(),
+    const ProfileView(),
+  ];
 
   int currentIndex = 0;
 
