@@ -3,5 +3,5 @@ class ApiConstants {
   static const String categoriesEndpoint = 'categories.php';
 
   static String mealsEndpoint(String categoryName) => 'filter.php?c=$categoryName';
-  static String mealDetailsEndpoint(String categoryId) => 'lookup.php?i=$categoryId';
+  static String mealDetailsEndpoint(String mealId) => 'lookup.php?i=$mealId';
 }

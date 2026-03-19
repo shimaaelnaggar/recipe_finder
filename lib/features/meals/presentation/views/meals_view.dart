@@ -76,6 +76,7 @@ class MealsView extends StatelessWidget {
                                 return MealCard(
                                   image: state.meals[index].mealImage,
                                   title: state.meals[index].mealTitle,
+                                  arguments: state.meals[index].mealId,
                                 );
                               },
                             )
