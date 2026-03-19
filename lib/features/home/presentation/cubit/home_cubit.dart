@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:recipe_finder/features/home/data/models/category_model.dart';
@@ -7,24 +6,34 @@ part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final HomeRepo homeRepo;
+  List<CategoryModel> allCategories = [];
 
   HomeCubit({required this.homeRepo}) : super(HomeInitial());
 
-  Future<void> getCategories() async {
+  void getCategories() async {
     emit(HomeLoading());
 
-    try {
-      final res = await homeRepo.getCategories();
-      res.fold(
-        (error) {
-          emit(HomeError(errorMessage: error));
-        },
-        (categories) {
-          emit(HomeLoaded(categories: categories));
-        },
-      );
-    } catch (e) {
-      emit(HomeError(errorMessage: e.toString()));
+    final result = await homeRepo.getCategories();
+
+    result.fold((errorMessage) => emit(HomeError(errorMessage: errorMessage)), (
+      categories,
+    ) {
+      allCategories = categories;
+      emit(HomeLoaded(categories: List.from(allCategories)));
+    });
+  }
+
+  void searchCategories(String query) {
+    if (query.isEmpty) {
+      emit(HomeLoaded(categories: List.from(allCategories)));
+    } else {
+      final filtered = allCategories
+          .where(
+            (cat) =>
+                cat.categoryTitle.toLowerCase().contains(query.toLowerCase()),
+          )
+          .toList();
+      emit(HomeLoaded(categories: filtered));
     }
   }
 }

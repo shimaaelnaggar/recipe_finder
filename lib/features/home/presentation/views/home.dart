@@ -46,7 +46,11 @@ class Home extends StatelessWidget {
 
                     SizedBox(height: 20),
 
-                    SearchField(),
+                    SearchField(
+                      onChanged: (String value) {
+                        context.read<HomeCubit>().searchCategories(value);
+                      },
+                    ),
 
                     SizedBox(height: 20),
 
@@ -69,7 +73,8 @@ class Home extends StatelessWidget {
                                 return RecipeCard(
                                   image: state.categories[index].categoryImage,
                                   title: state.categories[index].categoryTitle,
-                                  arguments: state.categories[index].categoryTitle,
+                                  arguments:
+                                      state.categories[index].categoryTitle,
                                 );
                               },
                             )
