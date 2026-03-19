@@ -3,11 +3,14 @@ import 'package:recipe_finder/core/routing/app_router.dart';
 import 'package:recipe_finder/core/routing/routes.dart';
 import 'package:recipe_finder/core/services/dio_services.dart';
 import 'package:recipe_finder/core/services/supabase_services.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SupabaseServices.initSupabase();
   DioServices.init();
+  await Hive.initFlutter();
+  await Hive.openBox('favorites');
   runApp(const MyApp());
 }
 
